@@ -79,6 +79,7 @@ module.exports = function (keystone, app, callback) {
 		configDir: options.configDir || letsencryptDir,
 		onRequest: app,
 		approveRegistration: approveRegistration,
+    server: 'https://acme-v01.api.letsencrypt.org/directory'
 		// TODO handleRenewFailure
 	});
 
