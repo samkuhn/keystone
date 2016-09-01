@@ -6,7 +6,8 @@ var utils = require('keystone-utils');
 var TextType = require('../text/TextType');
 
 // ISO_8601 is needed for the automatically created createdAt and updatedAt fields
-var parseFormats = ['YYYY-MM-DD', 'YYYY-MM-DD h:m:s a', 'YYYY-MM-DD h:m a', 'YYYY-MM-DD H:m:s', 'YYYY-MM-DD H:m', 'YYYY-MM-DD h:mm:s a Z', moment.ISO_8601];
+var parseFormats = ['YYYY-MM-DD', 'YYYY-MM-DD h:m:s a', 'YYYY-MM-DD h:m a', 'YYYY-MM-DD H:m:s', 'YYYY-MM-DD H:m', 'YYYY-MM-DD h:mm:s a Z', moment.ISO_8601, 'YYYY-MM-DD HH:mm', 'YYYY-MM-DD HH:mm Z', 'YYYY-MM-DD H:m', 'YYYY-MM-DD HH', 'YYYY-MM-DD H' ];
+
 /**
  * DateTime FieldType Constructor
  * @extends Field
@@ -19,7 +20,7 @@ function datetime (list, path, options) {
 	this._properties = ['formatString', 'isUTC'];
 	this.typeDescription = 'date and time';
 	this.parseFormatString = options.parseFormat || parseFormats;
-	this.formatString = (options.format === false) ? false : (options.format || 'YYYY-MM-DD h:m:s a');
+	this.formatString = (options.format === false) ? false : (options.format || 'YYYY-MM-DD HH:mm');
 	this.isUTC = options.utc || false;
 	if (this.formatString && typeof this.formatString !== 'string') {
 		throw new Error('FieldType.DateTime: options.format must be a string.');
@@ -66,6 +67,7 @@ datetime.prototype.getInputFromData = function (data) {
  */
 datetime.prototype.validateInput = function (data, callback) {
 	var value = this.getInputFromData(data);
+  console.log('validating', value);
 	// If the value is null, undefined or an empty string
 	// bail early since updateItem sanitizes that just fine
 	var result = true;

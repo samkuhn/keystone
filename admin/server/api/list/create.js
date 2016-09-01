@@ -7,6 +7,7 @@ module.exports = function (req, res) {
 	var item = new req.list.model();
 	req.list.updateItem(item, req.body, { files: req.files }, function (err) {
 		if (err) {
+      console.log(err);
 			res.status(err.error === 'validation errors' ? 400 : 500);
 			return res.json(err);
 		}
